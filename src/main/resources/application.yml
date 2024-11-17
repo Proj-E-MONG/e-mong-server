@@ -26,3 +26,11 @@ application:
     secret-key: c7940a36f9b9a267b10ac0d422361a0848b43e1a0a56a07af3c58f02b645e2ec
     expiration: 86400000 # 1일
     refresh-expiration: 60480000 # 7일
+
+twilio:
+  account:
+    sid: ${TWILIO_ACCOUNT_SID}
+  auth:
+    token: ${TWILIO_AUTH_TOKEN}
+  phone:
+    number: ${TWILIO_PHONE_NUMBER}

@@ -21,6 +21,7 @@ public class User {
     private SchoolEntity school;
     private LocalDate accessStartDate;
     private LocalDate accessEndDate;
+    private String phoneNumber;
 
     public User toUser(UserEntity userEntity) {
         return User.builder()
