@@ -24,7 +24,7 @@ public class MessageService {
         List<UserEntity> users = userJpaRepository.findAllByAccessStartDate(fiveYearsAgo);
 
         for (UserEntity user: users) {
-            sendMessage("+82" + user.getPhoneNumber(), "이몽 서비스로 졸업한 친구들을 만나요!");
+            sendMessage("+82" + user.getPhoneNumber(), "이몽 서비스로 졸업한 친구들을 만나요!(test)");
         }
     }
 

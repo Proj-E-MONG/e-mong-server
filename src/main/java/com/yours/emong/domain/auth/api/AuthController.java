@@ -24,7 +24,7 @@ public class AuthController {
     public BaseResponse signUp(@Validated @RequestBody SignUpRequest request) {
         authService.signUp(request);
         return BaseResponseData.created("회원가입 성공");
-    }
+    } //googleSheetsWebHook 이 이를 대신.
 
     @PostMapping("/sign-in")
     public BaseResponse signIn(@Validated @RequestBody SignInRequest request) {

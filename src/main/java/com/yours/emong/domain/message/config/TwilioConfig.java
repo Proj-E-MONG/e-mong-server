@@ -1,10 +1,9 @@
 package com.yours.emong.domain.message.config;
 
+//import com.twilio.Twilio;
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

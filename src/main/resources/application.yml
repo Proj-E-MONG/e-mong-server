@@ -27,6 +27,16 @@ application:
     expiration: 86400000 # 1일
     refresh-expiration: 60480000 # 7일
 
+google:
+  sheets:
+    credentials-path: classpath:e-mong-00edce0787f0.json # 인증 JSON 파일 경로
+    spreadsheet-id: 10FNsydCT3EC9dqaul6zetyvc56sU2EOPvT5N2LXAnNA  # 스프레드시트 ID
+    application-name: E-MONG       # 애플리케이션 이름
+    data-range: Form Responses 1!B2:E           # 가져올 데이터 범위 (헤더 제외)
+
+api:
+  sign-up-url: http://localhost:8080/sign-up
+
 twilio:
   account:
     sid: ${TWILIO_ACCOUNT_SID}
