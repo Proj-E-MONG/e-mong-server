@@ -3,7 +3,7 @@ package com.yours.emong.domain.schedule.controller;
 import com.yours.emong.domain.schedule.dto.DateSelectionDTO;
 import com.yours.emong.domain.schedule.dto.DateSelectionRequest;
 import com.yours.emong.domain.schedule.dto.ScheduleDTO;
-import com.yours.emong.domain.schedule.entity.Schedule;
+import com.yours.emong.domain.schedule.entity.ScheduleEntity;
 import com.yours.emong.domain.schedule.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,8 +49,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/{scheduleId}/view")
-    public ResponseEntity<Schedule> viewConfirmedSchedule(@PathVariable Long scheduleId) {
-        Schedule schedule = scheduleService.getConfirmedSchedule(scheduleId);
+    public ResponseEntity<ScheduleEntity> viewConfirmedSchedule(@PathVariable Long scheduleId) {
+        ScheduleEntity schedule = scheduleService.getConfirmedSchedule(scheduleId);
         if (schedule.isConfirmed()) {
             return ResponseEntity.ok(schedule);
         } else {

@@ -2,8 +2,8 @@ package com.yours.emong.domain.schedule.service;
 
 import com.yours.emong.domain.schedule.dto.DateSelectionDTO;
 import com.yours.emong.domain.schedule.dto.ScheduleDTO;
-import com.yours.emong.domain.schedule.entity.DateSelection;
-import com.yours.emong.domain.schedule.entity.Schedule;
+import com.yours.emong.domain.schedule.entity.DateSelectionEntity;
+import com.yours.emong.domain.schedule.entity.ScheduleEntity;
 import com.yours.emong.domain.schedule.repository.DateSelectionRepository;
 import com.yours.emong.domain.schedule.repository.ScheduleRepository;
 import com.yours.emong.domain.user.User;
@@ -26,7 +26,7 @@ public class ScheduleService {
     private final UserRepository userRepository;
 
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
-        Schedule schedule = new Schedule();
+        ScheduleEntity schedule = new ScheduleEntity();
         schedule.setStartDate(scheduleDTO.getStartDate());
         schedule.setEndDate(scheduleDTO.getEndDate());
         schedule.setTitle(scheduleDTO.getTitle());
@@ -36,7 +36,7 @@ public class ScheduleService {
     }
 
     public void selectDate(Long userId, Long scheduleId, LocalDate selectedDate) {
-        Schedule schedule = scheduleRepository.findById(scheduleId)
+        ScheduleEntity schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid schedule ID"));
 
         User user = userRepository.findById(userId)
@@ -47,18 +47,18 @@ public class ScheduleService {
     }
 
     public List<DateSelectionDTO> getSelectionsForSchedule(Long scheduleId) {
-        List<DateSelection> selections = dateSelectionRepository.findByScheduleId(scheduleId);
+        List<DateSelectionEntity> selections = dateSelectionRepository.findByScheduleId(scheduleId);
         return selections.stream().map(this::convertToDTO).toList();
     }
 
-    private ScheduleDTO convertToDTO(Schedule schedule) {
+    private ScheduleDTO convertToDTO(ScheduleEntity schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setId(schedule.getId());
         dto.setStartDate(schedule.getStartDate());
         dto.setEndDate(schedule.getEndDate());
         dto.setTitle(schedule.getTitle());
 
-        List<DateSelectionDTO> dateSelectionDTOs = schedule.getDateSelections()
+        List<DateSelectionDTO> dateSelectionDTOs = schedule.getDateSelectionEntities()
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -67,7 +67,7 @@ public class ScheduleService {
         return dto;
     }
 
-    private DateSelectionDTO convertToDTO(DateSelection dateSelection) {
+    private DateSelectionDTO convertToDTO(DateSelectionEntity dateSelection) {
         DateSelectionDTO dto = new DateSelectionDTO();
         dto.setUserId(dateSelection.getUser().getId());
         dto.setSelectedDate(dateSelection.getSelectedDate());
@@ -75,14 +75,14 @@ public class ScheduleService {
     }
 
     public void confirmSchedule(Long scheduleId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId)
+        ScheduleEntity schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("일정을 찾을 수 없습니다."));
 
         schedule.confirmSchedule();
         scheduleRepository.save(schedule);
     }
 
-    public Schedule getConfirmedSchedule(Long scheduleId) {
+    public ScheduleEntity getConfirmedSchedule(Long scheduleId) {
         return scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("일정을 찾을 수 없습니다."));
     }
