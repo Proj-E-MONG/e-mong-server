@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: E-MONG
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/E_Mong_Local
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  profiles:
+    include: aws
+
+jwt:
+  secret: ${JWT_SECRET}
+  expire:
+    access: 86400000
+    refresh: 604800000
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
