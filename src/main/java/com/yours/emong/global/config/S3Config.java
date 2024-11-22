@@ -1,4 +1,4 @@
-package com.yours.emong.domain.album.config;
+package com.yours.emong.global.config;
 
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
