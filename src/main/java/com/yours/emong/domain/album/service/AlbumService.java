@@ -66,19 +66,6 @@ public class AlbumService {
         }
     }
 
-    public String getFileUrl(String fileName){
-        return amazonS3.getUrl(bucket, fileName).toString();
-    }
-
-//    public List<String> getAllFileUrls(List<String> fileNames) {
-//        List<String> fileUrls = new ArrayList<>();
-//        fileNames.forEach(fileName -> {
-//            String fileUrl = getFileUrl(fileName);
-//            fileUrls.add(fileUrl);
-//        });
-//        return fileUrls;
-//    }
-
     public List<String> getAllFileUrls() {
         try {
             List<String> fileUrls = new ArrayList<>();
