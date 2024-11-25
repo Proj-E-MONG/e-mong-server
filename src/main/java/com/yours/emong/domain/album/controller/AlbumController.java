@@ -29,4 +29,11 @@ public class AlbumController {
         albumService.deleteFile(fileName);
         return new BaseResponse<>(true, "파일 삭제 성공", null);
     }
+
+    // 업로드된 모든 사진 확인
+    @GetMapping("/files")
+    public BaseResponse<List<String>> getAllFiles() {
+        List<String> allFiles = albumService.getAllFileUrls();
+        return new BaseResponse<>(true, "모든 파일 조회 성공", allFiles);
+    }
 }
