@@ -1,5 +1,6 @@
 package com.yours.emong.domain.album.service;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -62,6 +63,30 @@ public class AlbumService {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
+        }
+    }
+
+    public String getFileUrl(String fileName){
+        return amazonS3.getUrl(bucket, fileName).toString();
+    }
+
+//    public List<String> getAllFileUrls(List<String> fileNames) {
+//        List<String> fileUrls = new ArrayList<>();
+//        fileNames.forEach(fileName -> {
+//            String fileUrl = getFileUrl(fileName);
+//            fileUrls.add(fileUrl);
+//        });
+//        return fileUrls;
+//    }
+
+    public List<String> getAllFileUrls() {
+        try {
+            List<String> fileUrls = new ArrayList<>();
+            amazonS3.listObjects(bucket).getObjectSummaries()
+                    .forEach(s3Object -> fileUrls.add(amazonS3.getUrl(bucket, s3Object.getKey()).toString()));
+            return fileUrls;
+        } catch (AmazonServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "S3에서 파일 목록을 가져오는 데 실패했습니다.", e);
         }
     }
 }
