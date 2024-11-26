@@ -4,7 +4,6 @@ import com.yours.emong.domain.auth.dto.request.SignInRequest;
 import com.yours.emong.domain.auth.dto.request.SignUpRequest;
 import com.yours.emong.domain.auth.dto.response.JsonWebTokenResponse;
 import com.yours.emong.domain.auth.dto.response.RefreshTokenResponse;
-import com.yours.emong.domain.auth.support.Sha512PasswordEncoder;
 import com.yours.emong.domain.school.domain.SchoolEntity;
 import com.yours.emong.domain.school.domain.repository.jpa.SchoolJpaRepository;
 import com.yours.emong.domain.user.domain.UserEntity;
