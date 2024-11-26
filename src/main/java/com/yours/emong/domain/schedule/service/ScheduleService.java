@@ -6,8 +6,8 @@ import com.yours.emong.domain.schedule.entity.DateSelectionEntity;
 import com.yours.emong.domain.schedule.entity.ScheduleEntity;
 import com.yours.emong.domain.schedule.repository.DateSelectionRepository;
 import com.yours.emong.domain.schedule.repository.ScheduleRepository;
-import com.yours.emong.domain.user.User;
-import com.yours.emong.domain.user.UserRepository;
+import com.yours.emong.domain.user.domain.UserEntity;
+import com.yours.emong.domain.user.domain.repository.jpa.UserJpaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final DateSelectionRepository dateSelectionRepository;
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
 
     public ScheduleDTO createSchedule(ScheduleDTO scheduleDTO) {
         ScheduleEntity schedule = new ScheduleEntity();
@@ -39,7 +39,7 @@ public class ScheduleService {
         ScheduleEntity schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid schedule ID"));
 
-        User user = userRepository.findById(userId)
+        UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
 
         schedule.toggleDateSelection(user, selectedDate);

@@ -1,6 +1,6 @@
 package com.yours.emong.domain.schedule.entity;
 
-import com.yours.emong.domain.user.User;
+import com.yours.emong.domain.user.domain.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class ScheduleEntity {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DateSelectionEntity> dateSelectionEntities = new ArrayList<>();
 
-    public void toggleDateSelection(User user, LocalDate date) {
+    public void toggleDateSelection(UserEntity user, LocalDate date) {
         if (isConfirmed) {
             throw new IllegalStateException("이미 확정된 일정은 수정할 수 없습니다.");
         }
