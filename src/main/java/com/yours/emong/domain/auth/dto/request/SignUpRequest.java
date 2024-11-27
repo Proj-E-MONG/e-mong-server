@@ -1,10 +1,6 @@
 package com.yours.emong.domain.auth.dto.request;
 
 import jakarta.validation.constraints.*;
-import org.aspectj.bridge.Message;
-import org.aspectj.weaver.ast.Not;
-
-import java.time.Year;
 
 public record SignUpRequest (
 
