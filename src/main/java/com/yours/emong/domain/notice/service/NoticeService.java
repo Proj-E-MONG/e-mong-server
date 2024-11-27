@@ -9,6 +9,8 @@ import com.yours.emong.domain.notice.entity.NoticeEntity;
 import com.yours.emong.domain.notice.repository.NoticeRepository;
 import com.yours.emong.domain.user.domain.UserEntity;
 import com.yours.emong.domain.user.domain.repository.jpa.UserJpaRepository;
+import com.yours.emong.domain.user.dto.User;
+import com.yours.emong.global.security.auth.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -58,10 +60,14 @@ public class NoticeService {
     }
 
     private UserEntity fetchUserFromContext() {
-        // 현재 인증된 사용자 가져오기
-        // SecurityContextHolder에서 인증된 사용자 정보 가져오기
-        UserEntity principal = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userSerial = principal.getSerialNumber(); // 시리얼 번호로 유저 정보 가져오기
+        // 현재 인증된 사용자 정보 가져오기
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // User DTO를 가져옴
+        User user = customUserDetails.getUser();  // CustomUserDetails에서 User 객체 추출
+
+        // User 객체에서 SerialNumber를 가져와서, 이를 기반으로 UserEntity를 DB에서 조회
+        String userSerial = user.getSerialNumber();
 
         // UserEntity를 DB에서 가져오기
         return userJpaRepository.findBySerialNumber(userSerial)
