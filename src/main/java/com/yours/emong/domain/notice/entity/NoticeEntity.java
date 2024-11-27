@@ -1,6 +1,6 @@
 package com.yours.emong.domain.notice.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.yours.emong.domain.Chat.ChatRoomEntity;
 import com.yours.emong.domain.user.domain.UserEntity;
 import jakarta.persistence.*;
@@ -38,5 +38,6 @@ public class NoticeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id", nullable = false)
+    @JsonBackReference // 순환 참조 방지 (ChatRoomEntity -> NoticeEntity로 역참조)
     private ChatRoomEntity chatRoom; // 소속 채팅방
 }
