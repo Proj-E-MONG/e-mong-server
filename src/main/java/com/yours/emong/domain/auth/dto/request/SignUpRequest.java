@@ -16,6 +16,7 @@ public record SignUpRequest (
         int graduationYear,
         @NotBlank
         String schoolName,
+        @Pattern(regexp = "^\\d{10,11}$", message = "전화번호는 10자리 또는 11자리 숫자로만 입력해야 합니다.")
         @NotBlank
         String phoneNumber
 //        @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}", message = "정해진 핸드폰 양식으로 입력해주세요. (010-0000-0000)")

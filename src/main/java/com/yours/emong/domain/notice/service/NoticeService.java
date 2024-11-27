@@ -1,8 +1,8 @@
 package com.yours.emong.domain.notice.service;
 
 
-import com.yours.emong.domain.Chat.ChatRoomEntity;
-import com.yours.emong.domain.Chat.ChatRoomRepository;
+import com.yours.emong.domain.chat.domain.room.ChatRoomEntity;
+import com.yours.emong.domain.chat.domain.room.repository.ChatRoomRepository;
 import com.yours.emong.domain.notice.dto.NoticeCreateRequestDTO;
 import com.yours.emong.domain.notice.dto.NoticeUpdateRequestDTO;
 import com.yours.emong.domain.notice.entity.NoticeEntity;

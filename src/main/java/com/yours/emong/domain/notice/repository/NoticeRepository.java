@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Long> {
-    List<NoticeEntity> findAllByChatRoomId(Long chatRoomId);
 }

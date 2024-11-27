@@ -1,7 +1,8 @@
 package com.yours.emong.domain.notice.entity;
 
 
-import com.yours.emong.domain.Chat.ChatRoomEntity;
+
+import com.yours.emong.domain.chat.domain.room.ChatRoomEntity;
 import com.yours.emong.domain.user.domain.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +37,7 @@ public class NoticeEntity {
     @JoinColumn(name = "author_id", nullable = false)
     private UserEntity author; // 작성자
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "chat_room_id", nullable = false)
     private ChatRoomEntity chatRoom; // 소속 채팅방
 }

@@ -1,6 +1,3 @@
-  profiles:
-    include: aws
-
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/${DB_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -21,6 +18,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  profiles:
+      include: aws
+
 application:
   jwt:
     secret-key: c7940a36f9b9a267b10ac0d422361a0848b43e1a0a56a07af3c58f02b645e2ec
@@ -36,7 +36,4 @@ twilio:
     token: ${TWILIO_AUTH_TOKEN}
   phone:
     number: ${TWILIO_PHONE_NUMBER}
-
-  profiles:
-    include: aws
 
