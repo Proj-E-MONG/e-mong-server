@@ -45,15 +45,15 @@ public class NoticeService {
     // 공지 수정 로직
     public NoticeEntity updateNotice(NoticeUpdateRequestDTO requestDto) {
         UserEntity requester = fetchUserFromContext(); // 현재 사용자 가져오기
-        NoticeEntity notice = noticeRepository.findById(requestDto.getNoticeId())
+        NoticeEntity notice = noticeRepository.findById(requestDto.getNtcId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공지입니다."));
 
         if (!notice.getAuthor().equals(requester)) {
             throw new IllegalArgumentException("공지 수정 권한이 없습니다.");
         }
 
-        notice.setNtcTitle(requestDto.getTitle());
-        notice.setNtcContent(requestDto.getContent());
+        notice.setNtcTitle(requestDto.getNtcTitle());
+        notice.setNtcContent(requestDto.getNtcContent());
         notice.setUpdatedAt(LocalDateTime.now()); // 수정 시간 갱신
 
         return noticeRepository.save(notice);
