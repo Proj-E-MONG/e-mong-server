@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NoticeUpdateRequestDTO {
-    private Long noticeId;
-    private String title;
-    private String content;
+    private Long ntcId;
+    private String ntcTitle;
+    private String ntcContent;
 }
