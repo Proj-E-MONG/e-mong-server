@@ -27,7 +27,7 @@ public class NoticeController {
 
     // 공지 수정
     @PutMapping
-    public ResponseEntity<NoticeEntity> updateNotice(@RequestBody NoticeUpdateRequestDTO requestDto) {
+    public ResponseEntity<NoticeEntity> updateNotice(@PathVariable Long chatRoomId, @RequestBody NoticeUpdateRequestDTO requestDto) {
         NoticeEntity updatedNotice = noticeService.updateNotice(requestDto);
         return new ResponseEntity<>(updatedNotice, HttpStatus.OK);
     }
