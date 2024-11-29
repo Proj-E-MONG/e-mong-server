@@ -45,6 +45,8 @@ dependencies {
     //twilio
     implementation 'com.twilio.sdk:twilio:10.6.3'
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.533'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 

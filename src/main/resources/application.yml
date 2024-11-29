@@ -7,6 +7,11 @@ spring:
     hikari:
       max-lifetime: 177000
 
+  data:
+    mongodb:
+      uri:
+        ${MONGO_DB_PASSWORD}
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
