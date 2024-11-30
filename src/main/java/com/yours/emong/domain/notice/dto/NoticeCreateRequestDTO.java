@@ -1,5 +1,7 @@
 package com.yours.emong.domain.notice.dto;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NoticeCreateRequestDTO {
-    private Long chatRoomId;
+
+    @NotBlank
     private String ntcTitle;
+
+    @NotBlank
     private String ntcContent;
 }
 

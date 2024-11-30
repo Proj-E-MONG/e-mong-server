@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface MyProfileRepository extends JpaRepository<MyProfileEntity, Long> {
 
-    Optional<MyProfileEntity> findByUserId(Long UserId);
-
+    Optional<MyProfileEntity> findBySerialNumber(String serialNumber);
 
 }

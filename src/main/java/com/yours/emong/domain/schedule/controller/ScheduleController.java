@@ -1,59 +1,59 @@
 package com.yours.emong.domain.schedule.controller;
 
 import com.yours.emong.domain.schedule.dto.DateSelectionDTO;
-import com.yours.emong.domain.schedule.dto.DateSelectionRequest;
-import com.yours.emong.domain.schedule.dto.ScheduleDTO;
-import com.yours.emong.domain.schedule.entity.ScheduleEntity;
+import com.yours.emong.domain.schedule.dto.request.DateSelectionRequest;
+import com.yours.emong.domain.schedule.dto.response.DetailSelectionResponse;
+import com.yours.emong.domain.schedule.dto.response.ScheduleResponse;
 import com.yours.emong.domain.schedule.service.ScheduleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.yours.emong.global.common.response.BaseResponseData;
+import com.yours.emong.global.response.BaseResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/schedules")
+@RequiredArgsConstructor
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
-
-    @PostMapping
-    public ResponseEntity<ScheduleDTO> createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        ScheduleDTO createdSchedule = scheduleService.createSchedule(scheduleDTO);
-        return ResponseEntity.ok(createdSchedule);
-    }
+    private final ScheduleService scheduleService;
 
 
-    @PostMapping("/{scheduleId}/select-date")
-    public ResponseEntity<Void> selectDate(
+    // 일정 선택(유저 개인이 원하는 날짜를 확정)
+    @PostMapping("/select-date/{scheduleId}")
+    public BaseResponseData<ScheduleResponse> selectDate(
             @PathVariable Long scheduleId,
             @RequestBody DateSelectionRequest dateSelectionRequest) {
-        scheduleService.selectDate(dateSelectionRequest.getUserId(), scheduleId, dateSelectionRequest.getSelectedDate());
-        return ResponseEntity.ok().build();
+
+        ScheduleResponse scheduleResponse = scheduleService.selectDate(dateSelectionRequest.getUserId(), scheduleId, dateSelectionRequest.getSelectedDate());
+        return BaseResponseData.ok("일정 선택이 완료되었습니다.", scheduleResponse);
     }
 
-
-    @GetMapping("/{scheduleId}/selections")
-    public ResponseEntity<List<DateSelectionDTO>> getSelections(@PathVariable Long scheduleId) {
-        List<DateSelectionDTO> selections = scheduleService.getSelectionsForSchedule(scheduleId);
-        return ResponseEntity.ok(selections);
+    // 일정 취소
+    @PostMapping("cancel-date/{scheduleId}/{dateSelectionId}")
+    public ResponseEntity<String> cancelDate(@PathVariable Long scheduleId, @PathVariable Long dateSelectionId) {
+        scheduleService.cancelDate(scheduleId, dateSelectionId);
+        return ResponseEntity.ok("일정 취소가 완료되었습니다.");
     }
 
-    @PostMapping("/{scheduleId}/confirm")
-    public ResponseEntity<Void> confirmSchedule(@PathVariable Long scheduleId) {
-        scheduleService.confirmSchedule(scheduleId);
-        return ResponseEntity.ok().build();
+    // 선택된 일정 모두 가져오기
+    @GetMapping("/selections/{scheduleId}")
+    public BaseResponseData<List<DateSelectionDTO>> getSelections(@PathVariable Long scheduleId) {
+        List<DateSelectionDTO> selections = scheduleService.getAllSelections(scheduleId);
+        return BaseResponseData.ok("선택된 모든 일정을 가져옵니다.", selections);
     }
 
-    @GetMapping("/{scheduleId}/view")
-    public ResponseEntity<ScheduleEntity> viewConfirmedSchedule(@PathVariable Long scheduleId) {
-        ScheduleEntity schedule = scheduleService.getConfirmedSchedule(scheduleId);
-        if (schedule.isConfirmed()) {
-            return ResponseEntity.ok(schedule);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+    @GetMapping("/view/{scheduleId}/{dateSelectionId}") //날짜 속 정보 확인
+    public BaseResponseData<DetailSelectionResponse> viewConfirmedSchedule(@PathVariable Long scheduleId, @PathVariable Long dateSelectionId) {
+        return BaseResponseData.ok("자세한 일정 내용을 가져옵니다.", scheduleService.getDetailSelection(scheduleId, dateSelectionId));
     }
 }
+
+
+
+//    @PostMapping("/{scheduleId}/confirm")
+//    public ResponseEntity<Void> confirmSchedule(@PathVariable Long scheduleId) {
+//        scheduleService.confirmSchedule(scheduleId);
+//        return ResponseEntity.ok().build();
+//    }

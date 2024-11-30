@@ -24,16 +24,21 @@ public class MyProfileEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String serialNumber;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     private String profileImageUrl;
 
+
     private String introduction;
 
     @Column(nullable = false)
     private String username;
+
 
     private String phoneNumber;
 
@@ -42,7 +47,7 @@ public class MyProfileEntity extends BaseEntity {
     @Pattern(regexp = "^\\d{4}\\.\\d{2}\\.\\d{2}$", message = "생년월일은 yyyy.mm.dd 형식이여야 합니다.")
     private String birth;
 
-    private boolean isThereLover;
+    private boolean hasLover;
 
     private String mbti;
 

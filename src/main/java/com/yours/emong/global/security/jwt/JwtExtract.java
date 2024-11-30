@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
 public class JwtExtract {
 
     private final UserJpaRepository userJpaRepository;
-    private final User userDTO;
     private final JwtProperties jwtProperties;
     private SecretKey secretKey;
 
@@ -41,7 +40,7 @@ public class JwtExtract {
     public Authentication getAuthentication(final String token) {
         User user = userJpaRepository.
                 findBySerialNumber(getSerialNumber(token))
-                .map(userDTO::toUser)
+                .map(User::toUser)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
         final CustomUserDetails details = new CustomUserDetails(user);

@@ -23,7 +23,7 @@ public class User {
     private LocalDate accessEndDate;
     private String phoneNumber;
 
-    public User toUser(UserEntity userEntity) {
+    public static User toUser(UserEntity userEntity) {
         return User.builder()
                 .serialNumber(userEntity.getSerialNumber())
                 .name(userEntity.getName())

@@ -3,9 +3,7 @@ package com.yours.emong.domain.schedule.entity;
 
 import com.yours.emong.domain.user.domain.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -13,28 +11,23 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DateSelectionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    private LocalDate selectedDate; //한 유저가 선택한 특정 날짜.
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private UserEntity user; //어느 유저가 선택했는지 확인.
 
     @ManyToOne
     @JoinColumn(name = "schedule_id", nullable = false)
     private ScheduleEntity schedule;  // 필드명을 schedule로 변경 (더 직관적)
 
-    private LocalDate selectedDate;
-
-    public DateSelectionEntity(UserEntity user, LocalDate selectedDate, ScheduleEntity schedule) {
-        this.user = user;
-        this.selectedDate = selectedDate;
-        this.schedule = schedule; // scheduleEntity -> schedule로 변경
-    }
 
 }

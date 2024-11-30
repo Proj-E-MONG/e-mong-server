@@ -4,6 +4,9 @@ import com.yours.emong.domain.auth.dto.request.SignInRequest;
 import com.yours.emong.domain.auth.dto.request.SignUpRequest;
 import com.yours.emong.domain.auth.dto.response.JsonWebTokenResponse;
 import com.yours.emong.domain.auth.dto.response.RefreshTokenResponse;
+import com.yours.emong.domain.myProfile.domain.repository.jpa.MyProfileRepository;
+import com.yours.emong.domain.myProfile.service.MyProfileService;
+import com.yours.emong.domain.schedule.service.ScheduleService;
 import com.yours.emong.domain.school.domain.SchoolEntity;
 import com.yours.emong.domain.school.domain.repository.jpa.SchoolJpaRepository;
 import com.yours.emong.domain.user.domain.UserEntity;
@@ -27,9 +30,12 @@ import java.util.UUID;
 public class AuthService {
 
     private final UserJpaRepository userJpaRepository;
+    private final MyProfileService myProfileService;
+    private final ScheduleService scheduleService;
     private final SchoolJpaRepository schoolJpaRepository;
     private final JwtExtract jwtExtract;
     private final JwtProvider jwtProvider;
+    private final MyProfileRepository myProfileRepository;
 
     public void signUp(SignUpRequest request) { //회원가입
         if (checkUserByPhoneNumberAndGraduationYear(request.phoneNumber(), request.graduationYear())) { //졸업 년도를 보내고
@@ -44,6 +50,8 @@ public class AuthService {
                     .schoolName(request.schoolName())
                     .graduationDate(userGraduationDate)
                     .build());
+
+            scheduleService.createSchedule(); //년도-학교 별 일정 생성
         }
 
         String serialNumber = UUID.randomUUID()
@@ -51,7 +59,7 @@ public class AuthService {
                 .replace("-", "")
                 .substring(0,10);
 
-        userJpaRepository.save(UserEntity.builder()
+        UserEntity userEntity = userJpaRepository.save(UserEntity.builder()
                 .phoneNumber(request.phoneNumber())
                 .serialNumber(serialNumber) //이거 16자로 설정하기 , 스쿨엔티티 설정
                 .name(request.name())
@@ -59,6 +67,8 @@ public class AuthService {
                 .accessStartDate(school.getGraduationDate())
                 .accessEndDate(school.getGraduationDate().plusYears(5)) //졸업 후 5년 뒤.
                 .build());
+
+        myProfileService.createMyProfile(userEntity.getId());
 
         // serialNumber 변수에 담긴 값 문자발송
     }

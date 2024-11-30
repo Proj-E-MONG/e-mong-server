@@ -2,6 +2,7 @@ package com.yours.emong.domain.myProfile.dto;
 
 import com.yours.emong.domain.myProfile.domain.MyProfileEntity;
 import com.yours.emong.domain.user.dto.User;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,25 +15,32 @@ import java.util.List;
 @Builder
 public class MyProfile {
 
+    @Column(nullable = false)
     private User user;
+
+    @Column(nullable = false)
+    private String serialNumber;
 
     private String profileImageUrl;
 
     private String introduction;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String phoneNumber;
 
     private String region;
 
     private String birth;
 
-    private boolean isThereLover;
+    private boolean hasLover;
 
     private String mbti;
 
     private List<String> relatedLinks;
+
 
     public static MyProfile toMyProfile(MyProfileEntity myProfileEntity) {
         User userInstance = new User();
@@ -46,7 +54,7 @@ public class MyProfile {
                 .phoneNumber(myProfileEntity.getPhoneNumber())
                 .region(myProfileEntity.getRegion())
                 .birth(myProfileEntity.getBirth())
-                .isThereLover(myProfileEntity.isThereLover())
+                .hasLover(myProfileEntity.isHasLover())
                 .mbti(myProfileEntity.getMbti())
                 .relatedLinks(myProfileEntity.getRelatedLinks())
                 .build();

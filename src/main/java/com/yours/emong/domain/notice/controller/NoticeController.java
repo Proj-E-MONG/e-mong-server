@@ -20,8 +20,8 @@ public class NoticeController {
 
     // 공지 생성
     @PostMapping
-    public ResponseEntity<NoticeEntity> createNotice(@RequestBody NoticeCreateRequestDTO requestDto) {
-        NoticeEntity notice = noticeService.createNotice(requestDto);
+    public ResponseEntity<NoticeEntity> createNotice(@RequestBody NoticeCreateRequestDTO requestDto, @PathVariable Long chatRoomId) {
+        NoticeEntity notice = noticeService.createNotice(requestDto, chatRoomId);
         return new ResponseEntity<>(notice, HttpStatus.CREATED);
     }
 
