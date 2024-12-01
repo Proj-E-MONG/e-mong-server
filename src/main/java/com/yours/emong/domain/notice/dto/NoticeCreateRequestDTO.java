@@ -1,5 +1,6 @@
 package com.yours.emong.domain.notice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,11 +8,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class NoticeCreateRequestDTO {
     private Long chatRoomId;
     private String ntcTitle;
     private String ntcContent;
 }
+
+
+
+
+
+
+
+
+
 
 
 
